@@ -210,10 +210,10 @@ void PlayScene::GUI_Function() const
 
 	ImGui::Separator();
 
-	static float float2[2] = { m_pPlayer->getTransform()->position.x ,  m_pPlayer->getTransform()->position.y };
-	if(ImGui::SliderFloat2("Player Position", float2, 0.0f, 800.0f))
+	static float float2[2] = { m_pPlaneSprite->getTransform()->position.x ,  m_pPlaneSprite->getTransform()->position.y };
+	if(ImGui::SliderFloat2("Plane Position", float2, 0.0f, 800.0f))
 	{
-		m_pPlayer->getTransform()->position = glm::vec2(float2[0], float2[1]);
+		m_pPlaneSprite->getTransform()->position = glm::vec2(float2[0], float2[1]);
 	}
 	
 	ImGui::End();
