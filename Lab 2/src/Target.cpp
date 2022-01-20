@@ -9,6 +9,8 @@ Target::Target()
 	const auto size = TextureManager::Instance().getTextureSize("circle");
 	setWidth(size.x);
 	setHeight(size.y);
+
+	// set default position and other properties
 	getTransform()->position = glm::vec2(100.0f, 100.0f);
 	getRigidBody()->velocity = glm::vec2(0, 0);
 	getRigidBody()->isColliding = false;
