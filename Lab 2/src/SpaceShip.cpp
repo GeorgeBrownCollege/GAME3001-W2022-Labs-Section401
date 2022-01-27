@@ -14,7 +14,7 @@ SpaceShip::SpaceShip()
 	setHeight(size.y);
 
 	// set default position and other properties
-	getTransform()->position = glm::vec2(70.0f, 400.0f);
+	getTransform()->position = glm::vec2(100.0f, 400.0f);
 	getRigidBody()->velocity = glm::vec2(0, 0);
 	getRigidBody()->acceleration = glm::vec2(0, 0);
 	getRigidBody()->isColliding = false;
@@ -86,6 +86,7 @@ void SpaceShip::setTurnRate(const float angle)
 
 void SpaceShip::setDesiredVelocity(const glm::vec2 target_position)
 {
+	setTargetPosition(target_position);
 	m_desiredVelocity = Util::normalize(target_position - getTransform()->position) * m_maxSpeed;
 	getRigidBody()->velocity = m_desiredVelocity - getRigidBody()->velocity;
 	std::cout << "Desired Velocity: (" << m_desiredVelocity.x << ", " << m_desiredVelocity.y << ")" << std::endl;
@@ -94,16 +95,22 @@ void SpaceShip::setDesiredVelocity(const glm::vec2 target_position)
 void SpaceShip::Seek()
 {
 	// compute the target direction and magnitude
+	auto target_direction = getTargetPosition() - getTransform()->position;
 
 	// normalize the direction
+	target_direction = Util::normalize(target_direction) - getCurrentDirection();
 
+	// change our direction towards the target
+	setCurrentDirection(target_direction);
+
+	
 	// implement LookWhereYoureGoing
 
 }
 
 void SpaceShip::m_move()
 {
-	//Seek();
+	Seek();
 
 	// kinematic equation for motion --> pf = pi + vi * (timestep) + 0.5ai * (timestep * timestep)
 
