@@ -279,7 +279,8 @@ glm::vec2 Util::normalize(const glm::vec2 vec)
 	auto x = vec.x;
 	auto y = vec.y;
 	auto length = (x * x) + (y * y);
-	if (length > 0) {
+	if (length > 0) 
+	{
 		length = 1.0 / sqrt(length);
 		dest.x = vec.x * length;
 		dest.y = vec.y * length;

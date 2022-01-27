@@ -61,6 +61,7 @@ void PlayScene::start()
 	addChild(m_pTarget);
 
 	m_pSpaceShip = new SpaceShip();
+	m_pSpaceShip->setCurrentDirection(glm::vec2(1.0f, 0.0f)); // looking right
 	addChild(m_pSpaceShip);
 	
 

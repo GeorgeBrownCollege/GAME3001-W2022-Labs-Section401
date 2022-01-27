@@ -66,22 +66,20 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 		p1.y + p1Height > p2.y
 		)
 	{
-		if (!object2->getRigidBody()->isColliding) {
+		if (!object2->getRigidBody()->isColliding) 
+		{
 
 			object2->getRigidBody()->isColliding = true;
 
-			switch (object2->getType()) {
-			case TARGET:
-				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			case OBSTACLE:
-				std::cout << "Collision with Obstacle!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			default:
+			switch (object2->getType())
+			{
+				case SPACE_SHIP:
+					std::cout << "Collision with SpaceShip!" << std::endl;
 
-				break;
+					break;
+				default:
+
+					break;
 			}
 
 			return true;
@@ -285,56 +283,23 @@ bool CollisionManager::circleAABBCheck(GameObject* object1, GameObject* object2)
 
 			object2->getRigidBody()->isColliding = true;
 
-			const auto attackVector = object1->getTransform()->position - object2->getTransform()->position;
+			/*const auto attackVector = object1->getTransform()->position - object2->getTransform()->position;
 			const auto normal = glm::vec2(0.0f, -1.0f);
 
 			const auto dot = Util::dot(attackVector, normal);
-			const auto angle = acos(dot / Util::magnitude(attackVector)) * Util::Rad2Deg;
+			const auto angle = acos(dot / Util::magnitude(attackVector)) * Util::Rad2Deg;*/
 
-			switch (object2->getType()) {
-			case TARGET:
-				std::cout << "Collision with Planet!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			case SHIP:
+			switch (object2->getType())
 			{
-				SoundManager::Instance().playSound("thunder", 0);
-				auto velocityX = object1->getRigidBody()->velocity.x;
-				auto velocityY = object1->getRigidBody()->velocity.y;
-
-				if ((attackVector.x > 0 && attackVector.y < 0) || (attackVector.x < 0 && attackVector.y < 0))
-					// top right or top left
+				case SPACE_SHIP:
 				{
+					std::cout << "Collision with Target and SpaceShip" << std::endl;
 
-					if (angle <= 45)
-					{
-						object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
-					}
-					else
-					{
-						object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
-					}
+					
 				}
-
-				if ((attackVector.x > 0 && attackVector.y > 0) || (attackVector.x < 0 && attackVector.y > 0))
-					// bottom right or bottom left
-				{
-					if (angle <= 135)
-					{
-						object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
-					}
-					else
-					{
-						object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
-					}
-				}
-			}
-
-
-			break;
-			default:
-
 				break;
+				default:
+					break;
 			}
 
 			return true;
