@@ -15,6 +15,8 @@ Agent::Agent()
 	m_collisionWhiskers[0] = false;
 	m_collisionWhiskers[1] = false;
 	m_collisionWhiskers[2] = false;
+
+	m_whiskerAngle = 45;
 }
 
 Agent::~Agent()
