@@ -6,7 +6,9 @@
 #include "imgui.h"
 #include "imgui_sdl.h"
 #include "Renderer.h"
+
 #include "Util.h"
+#include "Config.h"
 
 PlayScene::PlayScene()
 {
@@ -63,14 +65,15 @@ void PlayScene::start()
 	m_buildGrid();
 	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 	
-	m_pTarget = new Target(); // instantiating a new Target object - allocating memory on the Heap
+	m_pTarget = new Target();
+	m_pTarget->getTransform()->position = m_getTile(15, 11)->getTransform()->position + offset;
+	m_pTarget->setGridPosition(15.0f, 11.0f);
 	addChild(m_pTarget);
 
 	m_pSpaceShip = new SpaceShip();
+	m_pSpaceShip->getTransform()->position = m_getTile(1, 3)->getTransform()->position + offset; // position to World
+	m_pSpaceShip->setGridPosition(1.0f, 3.0f);
 	addChild(m_pSpaceShip);
-
-	
-
 
 	// preload all sounds
 	SoundManager::Instance().load("../Assets/audio/yay.ogg", "yay", SOUND_SFX);
@@ -133,6 +136,7 @@ Tile* PlayScene::m_getTile(glm::vec2 grid_position)
 
 void PlayScene::GUI_Function()
 {
+	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 	// Always open with a NewFrame
 	ImGui::NewFrame();
 
@@ -153,18 +157,35 @@ void PlayScene::GUI_Function()
 	ImGui::Separator();
 
 	// target properties
-	
-	static float target_position[2] = { m_pTarget->getTransform()->position.x, m_pTarget->getTransform()->position.y};
-	if(ImGui::SliderFloat2("Target Position", target_position, 0.0f, 800.0f))
+
+	static float start_position[2] = { m_pSpaceShip->getGridPosition().x, m_pSpaceShip->getGridPosition().y };
+	if (ImGui::SliderFloat2("Start Position", start_position, 0.0f, Config::COL_NUM - 1))
 	{
-		m_pTarget->getTransform()->position = glm::vec2(target_position[0], target_position[1]);
+		// check to ensure that start is not off grid
+		if(start_position[1] > Config::ROW_NUM -1)
+		{
+			start_position[1] = Config::ROW_NUM - 1;
+		}
+		
+		m_pSpaceShip->getTransform()->position = m_getTile(start_position[0], start_position[1])->getTransform()->position + offset;
+		m_pSpaceShip->setGridPosition(start_position[0], start_position[1]);
 	}
 
-	static float ship_position[2] = { m_pSpaceShip->getTransform()->position.x, m_pSpaceShip->getTransform()->position.y };
-	if (ImGui::SliderFloat2("Spaceship Position", ship_position, 0.0f, 800.0f))
+	
+	static float goal_position[2] = { m_pTarget->getGridPosition().x, m_pTarget->getGridPosition().y};
+	if(ImGui::SliderFloat2("Goal Position", goal_position, 0.0f, Config::COL_NUM - 1))
 	{
-		m_pSpaceShip->getTransform()->position = glm::vec2(ship_position[0], ship_position[1]);
+		// check to ensure that start is not off grid
+		if (goal_position[1] > Config::ROW_NUM - 1)
+		{
+			goal_position[1] = Config::ROW_NUM - 1;
+		}
+
+		m_pTarget->getTransform()->position = m_getTile(goal_position[0], goal_position[1])->getTransform()->position + offset;
+		m_pTarget->setGridPosition(goal_position[0], goal_position[1]);
 	}
+
+	
 
 	
 
