@@ -235,10 +235,26 @@ void PlayScene::GUI_Function()
 	
 	ImGui::Separator();
 
+	// heuristic selection
+
+	static int radio = m_currentHeuristic;
+	ImGui::Text("Heuristic Type");
+	ImGui::RadioButton("Manhattan", &radio, MANHATTAN);
+	ImGui::SameLine();
+	ImGui::RadioButton("Euclidean", &radio, EUCLIDEAN);
+	
+	if(m_currentHeuristic != radio)
+	{
+		m_currentHeuristic = static_cast<Heuristic>(radio);
+		m_computeTileCosts();
+	}
+
+	ImGui::Separator();
+
 	// target properties
 
-	static float start_position[2] = { m_pSpaceShip->getGridPosition().x, m_pSpaceShip->getGridPosition().y };
-	if (ImGui::SliderFloat2("Start Position", start_position, 0.0f, Config::COL_NUM - 1))
+	static int start_position[2] = { m_pSpaceShip->getGridPosition().x, m_pSpaceShip->getGridPosition().y };
+	if (ImGui::SliderInt2("Start Position", start_position, 0.0f, Config::COL_NUM - 1))
 	{
 		// check to ensure that start is not off grid
 		if(start_position[1] > Config::ROW_NUM - 1)
@@ -253,8 +269,8 @@ void PlayScene::GUI_Function()
 	}
 
 	
-	static float goal_position[2] = { m_pTarget->getGridPosition().x, m_pTarget->getGridPosition().y};
-	if(ImGui::SliderFloat2("Goal Position", goal_position, 0.0f, Config::COL_NUM - 1))
+	static int goal_position[2] = { m_pTarget->getGridPosition().x, m_pTarget->getGridPosition().y};
+	if(ImGui::SliderInt2("Goal Position", goal_position, 0.0f, Config::COL_NUM - 1))
 	{
 		// check to ensure that start is not off grid
 		if (goal_position[1] > Config::ROW_NUM - 1)
