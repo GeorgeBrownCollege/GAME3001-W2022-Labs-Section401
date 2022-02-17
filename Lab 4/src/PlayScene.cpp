@@ -168,13 +168,15 @@ void PlayScene::GUI_Function()
 	if (ImGui::SliderFloat2("Start Position", start_position, 0.0f, Config::COL_NUM - 1))
 	{
 		// check to ensure that start is not off grid
-		if(start_position[1] > Config::ROW_NUM -1)
+		if(start_position[1] > Config::ROW_NUM - 1)
 		{
 			start_position[1] = Config::ROW_NUM - 1;
 		}
-		
+
+		m_getTile(m_pSpaceShip->getGridPosition())->setTileStatus(UNVISITED);
 		m_pSpaceShip->getTransform()->position = m_getTile(start_position[0], start_position[1])->getTransform()->position + offset;
 		m_pSpaceShip->setGridPosition(start_position[0], start_position[1]);
+		m_getTile(m_pSpaceShip->getGridPosition())->setTileStatus(START);
 	}
 
 	
@@ -187,8 +189,10 @@ void PlayScene::GUI_Function()
 			goal_position[1] = Config::ROW_NUM - 1;
 		}
 
+		m_getTile(m_pTarget->getGridPosition())->setTileStatus(UNVISITED);
 		m_pTarget->getTransform()->position = m_getTile(goal_position[0], goal_position[1])->getTransform()->position + offset;
 		m_pTarget->setGridPosition(goal_position[0], goal_position[1]);
+		m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
 	}
 
 	
