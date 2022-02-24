@@ -40,12 +40,28 @@ private:
 	void m_setGridEnabled(bool state);
 	void m_computeTileCosts();
 
+	// calculate shortest path and related methods
+	void m_findShortestPath();
+	void m_displayPathList();
+	void m_resetPathfinding();
+	void m_resetSimulation();
+
+	// tile lists for pathfinding
+	std::vector<Tile*> m_pOpenList;
+	std::vector<Tile*> m_pClosedList;
+	std::vector<Tile*> m_pPathList;
+
 	// convenience functions
 	Tile* m_getTile(int col, int row);
 	Tile* m_getTile(glm::vec2 grid_position);
 	
 	// heuristic
 	Heuristic m_currentHeuristic;
+
+	// ship movement
+	int moveCounter = 0;
+	bool m_shipIsMoving = false;
+	void m_moveShip();
 };
 
 #endif /* defined (__PLAY_SCENE__) */
