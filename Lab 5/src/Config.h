@@ -4,7 +4,7 @@
 
 #include <SDL_ttf.h>
 #include <memory>
-#include "glm/vec2.hpp"
+#include <glm/vec2.hpp>
 
 class Config {
 public:
@@ -17,7 +17,6 @@ public:
 	static const int MINE_NUM = 50;
 	static const int SCORE = 0;
 	static const int LIVES = 5;
-	static glm::vec2 OFFSET;
 
 	// Define Custom Deleters for shared_ptr types
 	static void SDL_DelRes(SDL_Window* r) { SDL_DestroyWindow(r); }
