@@ -258,7 +258,7 @@ void PlayScene::m_findShortestPath()
 			}
 
 			// Step 2.c - remove the reference of the current tile in the open list
-			m_pPathList.push_back(m_pOpenList[0]); // add the min_tile to the path_list
+			m_pPathList.push_back(m_pOpenList[0]); // add the top of the open list to the path_list
 			m_pOpenList.pop_back(); // empties the open list
 
 			// Step 2.d - add the min_tile to the openList
@@ -277,7 +277,10 @@ void PlayScene::m_findShortestPath()
 			}
 		}
 
-		// TODO: add Alex's hack
+		// Alex's hack - to correct the algorithm
+		Tile* goal = m_pPathList.at(m_pPathList.size() - 2);
+		m_pPathList.erase(m_pPathList.end() - 2);
+		m_pPathList.push_back(goal);
 
 		m_displayPathList();
 	}
@@ -289,7 +292,7 @@ void PlayScene::m_displayPathList()
 	{
 		std::cout << "(" << tile->getGridPosition().x << ", " << tile->getGridPosition().y << ")" << std::endl;
 	}
-	std::cout << "Path Length" << m_pPathList.size() << std::endl;
+	std::cout << "Path Length: " << m_pPathList.size() << std::endl;
 }
 
 void PlayScene::m_resetPathfinding()
@@ -355,6 +358,13 @@ void PlayScene::GUI_Function()
 	{
 		m_currentHeuristic = static_cast<Heuristic>(radio);
 		m_computeTileCosts();
+	}
+
+	ImGui::Separator();
+
+	if(ImGui::Button("Find Shortest Path"))
+	{
+		m_findShortestPath();
 	}
 
 	ImGui::Separator();
