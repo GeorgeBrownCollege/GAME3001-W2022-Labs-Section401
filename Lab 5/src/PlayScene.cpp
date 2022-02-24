@@ -62,17 +62,17 @@ void PlayScene::start()
 
 	// Setup the Grid
 	m_buildGrid();
-	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
+
 	m_currentHeuristic = MANHATTAN;
 	
 	m_pTarget = new Target();
-	m_pTarget->getTransform()->position = m_getTile(15, 11)->getTransform()->position + offset;
+	m_pTarget->getTransform()->position = m_getTile(15, 11)->getTransform()->position + Config::OFFSET;
 	m_pTarget->setGridPosition(15.0f, 11.0f);
 	m_getTile(15, 11)->setTileStatus(GOAL);
 	addChild(m_pTarget);
 
 	m_pSpaceShip = new SpaceShip();
-	m_pSpaceShip->getTransform()->position = m_getTile(1, 3)->getTransform()->position + offset; // position to World
+	m_pSpaceShip->getTransform()->position = m_getTile(1, 3)->getTransform()->position + Config::OFFSET; // position to World
 	m_pSpaceShip->setGridPosition(1.0f, 3.0f);
 	m_getTile(1, 3)->setTileStatus(START);
 	addChild(m_pSpaceShip);
@@ -326,7 +326,6 @@ Tile* PlayScene::m_getTile(glm::vec2 grid_position)
 
 void PlayScene::GUI_Function()
 {
-	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 	// Always open with a NewFrame
 	ImGui::NewFrame();
 
@@ -381,7 +380,7 @@ void PlayScene::GUI_Function()
 		}
 
 		m_getTile(m_pSpaceShip->getGridPosition())->setTileStatus(UNVISITED);
-		m_pSpaceShip->getTransform()->position = m_getTile(start_position[0], start_position[1])->getTransform()->position + offset;
+		m_pSpaceShip->getTransform()->position = m_getTile(start_position[0], start_position[1])->getTransform()->position + Config::OFFSET;
 		m_pSpaceShip->setGridPosition(start_position[0], start_position[1]);
 		m_getTile(m_pSpaceShip->getGridPosition())->setTileStatus(START);
 	}
@@ -397,7 +396,7 @@ void PlayScene::GUI_Function()
 		}
 
 		m_getTile(m_pTarget->getGridPosition())->setTileStatus(UNVISITED);
-		m_pTarget->getTransform()->position = m_getTile(goal_position[0], goal_position[1])->getTransform()->position + offset;
+		m_pTarget->getTransform()->position = m_getTile(goal_position[0], goal_position[1])->getTransform()->position + Config::OFFSET;
 		m_pTarget->setGridPosition(goal_position[0], goal_position[1]);
 		m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
 		m_computeTileCosts();
