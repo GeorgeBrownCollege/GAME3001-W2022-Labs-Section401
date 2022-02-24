@@ -258,7 +258,7 @@ void PlayScene::m_findShortestPath()
 			}
 
 			// Step 2.c - remove the reference of the current tile in the open list
-			m_pPathList.push_back(m_pOpenList[0]);
+			m_pPathList.push_back(m_pOpenList[0]); // add the min_tile to the path_list
 			m_pOpenList.pop_back(); // empties the open list
 
 			// Step 2.d - add the min_tile to the openList
@@ -275,16 +275,21 @@ void PlayScene::m_findShortestPath()
 					m_pClosedList.push_back(neighbour);
 				}
 			}
-
-			// TODO: add Alex's hack
-			
 		}
+
+		// TODO: add Alex's hack
+
+		m_displayPathList();
 	}
 }
 
 void PlayScene::m_displayPathList()
 {
-	
+	for (auto tile : m_pPathList)
+	{
+		std::cout << "(" << tile->getGridPosition().x << ", " << tile->getGridPosition().y << ")" << std::endl;
+	}
+	std::cout << "Path Length" << m_pPathList.size() << std::endl;
 }
 
 void PlayScene::m_resetPathfinding()
