@@ -147,6 +147,32 @@ void PlayScene::m_toggleGrid(const bool state)
 
 void PlayScene::m_checkShipLOS(DisplayObject* target_object)
 {
+	m_pSpaceShip->setHasLOS(false);
+
+	// if ship to target distance is less than or equal to LOS Distance
+	auto ShipToTargetDistance = Util::getClosestEdge(m_pSpaceShip->getTransform()->position, target_object);
+	if(ShipToTargetDistance <= m_pSpaceShip->getLOSDistance())
+	{
+		std::vector<DisplayObject*> contactList;
+		for (auto object : getDisplayList())
+		{
+			if (object->getType() == PATH_NODE) { continue; } // ignore path_nodes
+			if((object->getType() != m_pSpaceShip->getType()) && (object->getType() != target_object->getType()))
+			{
+				// check if object is closer to the spaceship than the target
+				auto ShipToObjectDistance = Util::getClosestEdge(m_pSpaceShip->getTransform()->position, object);
+				if(ShipToObjectDistance <= ShipToTargetDistance)
+				{
+					contactList.push_back(object);
+				}
+			}
+		}
+		auto hasLOS = CollisionManager::LOSCheck(m_pSpaceShip,
+			m_pSpaceShip->getTransform()->position + m_pSpaceShip->getCurrentDirection() * m_pSpaceShip->getLOSDistance(),
+			contactList, target_object);
+		m_pSpaceShip->setHasLOS(hasLOS);
+	}
+	
 }
 
 void PlayScene::m_storeObstacles()
