@@ -59,6 +59,9 @@ public:
 	virtual void MoveToRange() {}
 	virtual void Patrol() {}
 
+	// New Utility for Lab 7 - part 2
+	bool checkAgentLOSToTarget(Agent* agent, DisplayObject* target_object, std::vector<Obstacle*>& obstacles);
+
 private:
 	void m_changeDirection();
 	float m_currentHeading; // angle the ship is looking

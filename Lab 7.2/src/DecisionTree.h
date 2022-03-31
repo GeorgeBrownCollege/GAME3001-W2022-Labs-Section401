@@ -21,13 +21,18 @@ public:
 
 	// Getters and Setters (accessors and mutators)
 	Agent* getAgent() const;
-	void setAgent(Agent* agent);
-
-	// readonly getters
 	LOSCondition* getLOSNode() const;
 	RadiusCondition* getRadiusNode() const;
 	CloseCombatCondition* getCloseCombatNode() const;
+	//RangedCombatCondition* getRangedCombatNode() const;
+	std::vector<TreeNode*>& getTree();
 
+	void setLOSNode(LOSCondition* node);
+	void setRadiusNode(RadiusCondition* node);
+	void setCloseCombatNode(CloseCombatCondition* node);
+	//void setRangedCombatNode(RangedCombatCondition* node);
+	void setAgent(Agent* agent);
+	
 	// Public Functions
 	TreeNode* AddNode(TreeNode* parent, TreeNode* child_node, TreeNodeType type);
 	void Display();
@@ -44,9 +49,6 @@ private:
 	CloseCombatCondition* m_CloseCombatNode;
 
 	std::vector<TreeNode*> m_treeNodeList;
-	
-	// Private methods
-	/*void m_buildTree();*/
 };
 
 #endif /* defined (__DECISION_TREE__) */
