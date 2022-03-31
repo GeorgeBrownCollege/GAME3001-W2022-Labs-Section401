@@ -16,5 +16,5 @@ void MoveToPlayerAction::Action()
 	{
 		std::cout << "Performing " << m_name << std::endl;
 	}
-	getAgent()->MoveToPlayer();
+	getAgent()->MoveToRange();
 }

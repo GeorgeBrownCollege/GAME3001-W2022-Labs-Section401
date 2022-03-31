@@ -249,9 +249,9 @@ void RangedCombatEnemy::m_buildTree()
 	dynamic_cast<ActionNode*>(moveToLOSNode)->setAgent(this);
 	m_tree->getTree().push_back(moveToLOSNode);
 
-	TreeNode* moveToPlayerNode = m_tree->AddNode(m_tree->getCloseCombatNode(), new MoveToPlayerAction(), LEFT_TREE_NODE);
-	dynamic_cast<ActionNode*>(moveToPlayerNode)->setAgent(this);
-	m_tree->getTree().push_back(moveToPlayerNode);
+	TreeNode* moveToRangeNode = m_tree->AddNode(m_tree->getCloseCombatNode(), new MoveToRangeAction(), LEFT_TREE_NODE);
+	dynamic_cast<ActionNode*>(moveToRangeNode)->setAgent(this);
+	m_tree->getTree().push_back(moveToRangeNode);
 
 	TreeNode* attackNode = m_tree->AddNode(m_tree->getCloseCombatNode(), new AttackAction(), RIGHT_TREE_NODE);
 	dynamic_cast<ActionNode*>(attackNode)->setAgent(this);
