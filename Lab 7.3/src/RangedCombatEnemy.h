@@ -5,7 +5,7 @@
 #include "Agent.h"
 #include "DecisionTree.h"
 
-class RangedCombatEnemy final : public Agent
+class RangedCombatEnemy final : public virtual Agent
 {
 public:
 	RangedCombatEnemy();

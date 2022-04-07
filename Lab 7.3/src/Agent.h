@@ -17,7 +17,7 @@ public:
 
 	// Inherited via GameObject
 	void draw() override = 0;
-	void update() override = 0;
+	void update() override;
 	void clean() override = 0;
 
 	// getters
@@ -35,6 +35,8 @@ public:
 	glm::vec4 getLineColor(int index);
 	float getWhiskerAngle() const;
 
+	int getHealth() const;
+
 	const ActionState getActionState() { return m_state; }
 
 	// setters
@@ -51,6 +53,9 @@ public:
 	void setLineColor(int index, glm::vec4 color);
 	void setWhiskerAngle(float a);
 	void updateWhiskers(float a);
+
+	void setHealth(int value);
+	void takeDamage(int value);
 
 	void setActionState(ActionState a) { m_state = a; }
 
