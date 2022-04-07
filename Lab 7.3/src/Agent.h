@@ -5,6 +5,8 @@
 #include <glm/vec4.hpp>
 #include "NavigationObject.h"
 #include "ActionState.h"
+// Added Lab 7b
+#include "EventManager.h"
 #include "Obstacle.h"
 
 class Agent : public NavigationObject
@@ -58,6 +60,10 @@ public:
 	virtual void MoveToPlayer() {}
 	virtual void MoveToRange() {}
 	virtual void Patrol() {}
+	// New Lab 7c
+	virtual void Flee() {}
+	virtual void WaitBehindCover() {}
+	virtual void MoveToCover() {}
 
 	// New Utility for Lab 7 - part 2
 	bool checkAgentLOSToTarget(Agent* agent, DisplayObject* target_object, std::vector<Obstacle*>& obstacles);
@@ -86,6 +92,9 @@ private:
 
 	// action state
 	ActionState m_state;
+
+	// New Lab 7c
+	int m_health = 100;
 };
 
 

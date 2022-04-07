@@ -24,6 +24,25 @@ Agent::Agent()
 Agent::~Agent()
 = default;
 
+void Agent::update()
+{
+}
+
+int Agent::getHealth() const
+{
+	return m_health;
+}
+
+void Agent::setHealth(const int value)
+{
+	m_health = value;
+}
+
+void Agent::takeDamage(const int value)
+{
+	m_health -= value;
+}
+
 glm::vec2 Agent::getTargetPosition() const
 {
 	return m_targetPosition;
