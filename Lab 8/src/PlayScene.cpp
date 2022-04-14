@@ -166,6 +166,11 @@ void PlayScene::start()
 	ImGuiWindowFrame::Instance().setGUIFunction(std::bind(&PlayScene::GUI_Function, this));
 }
 
+void PlayScene::SpawnEnemyTorpedo()
+{
+	
+}
+
 void PlayScene::GUI_Function()
 {
 	// Always open with a NewFrame
